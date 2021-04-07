@@ -1,0 +1,17 @@
+- hosts: all
+  vars_files:
+          - vars_dir/{{ansible_facts['distribution']}}.yml
+  tasks:
+          - name: "Installing Software"
+            package:
+                    name: "{{ package }}"
+
+          - name: "copying Webpage"
+            copy:
+                    src: html/{{ ansible_facts['distribution'] }}.html
+                    dest: "/var/www/html/index.html" 
+
+          - name: "Starting Services"
+            service:
+                    name: "{{ package }}"
+                    state: restarted
